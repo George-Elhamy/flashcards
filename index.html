@@ -15,7 +15,7 @@
       --masc: #1d4ed8; /* blue */
       --fem:  #dc2626; /* red */
       --verb: #059669; /* green */
-      --plural: #5a677f; /* gray */
+      --plural: #424b5d; /* gray */
       --fg:   #111827;
       --muted:#374151;
       --card-w: min(92vw, 420px);
@@ -95,7 +95,7 @@
     .masc { background: linear-gradient(160deg, var(--masc), #3b82f6); }
     .fem  { background: linear-gradient(160deg, var(--fem), #ef4444); }
     .verb { background: linear-gradient(160deg, var(--verb), #10b981); }
-    .plural { background: linear-gradient(160deg, var(--plural), #9ca3af); }
+    .plural { background: linear-gradient(160deg, var(--plural), #424b5d); }
 
     .controls {
       display: flex;
@@ -224,7 +224,16 @@
     ];
 
     let idx = 0;
-    let order = [...CARDS.keys()];
+    function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+let order = shuffle([...CARDS.keys()]);
+
     let showArabicFirst = true;
 
     const elCard = document.getElementById('card');
