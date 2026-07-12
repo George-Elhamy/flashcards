@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+  <title>كلمات المستوى الثاني</title>
+  <style>
+    @font-face {
+      font-family: "New Athanasius";
+      src: url("../NEWATH.ttf") format("truetype");
+      font-display: swap;
+    }
+
+    :root {
+      --masc: #1d4ed8; /* blue */
+      --fem:  #dc2626; /* red */
+      --verb: #059669; /* green */
+      --plural: #424b5d; /* gray */
+      --fg:   #111827;
+      --muted:#374151;
+      --card-w: min(92vw, 420px);
+      --card-h: min(65vh, 480px);
+      --radius: 18px;
+    }
+    html, body {
+      height: 100%;
+      margin: 0;
+      background: #ffffff;
+      color: var(--fg);
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans Arabic", Arial, sans-serif;
+      overflow: hidden;
+    }
+    .wrap {
+      height: 100%;
+      display: grid;
+      grid-template-rows: auto auto 1fr auto;
+      align-items: center;
+      justify-items: center;
+      gap: 8px;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+
+    header {
+      display: flex; align-items: center; justify-content: space-between;
+      width: 100%; max-width: 480px;
+    }
+    header h1 { font-size: 1rem; margin: 0; font-weight: 700; text-align: right; }
+    .progress { font-size: .85rem; color: var(--muted); text-align: left; }
+
+    .mode {
+      display: flex; gap: 8px; justify-content: center;
+    }
+    .mode button {
+      border: 1px solid black; 
+      padding: 6px 12px; border-radius: 8px;
+      font-weight: 600; background: white; color: black;
+      cursor: pointer;
+    }
+    .mode button.active { background: black; color: white; }
+
+    /* Card */
+    .stage { display: grid; place-items: center; flex: 1; }
+    .card {
+      width: var(--card-w);
+      height: var(--card-h);
+      perspective: 1200px;
+      touch-action: manipulation;
+    }
+    .card-inner {
+      position: relative; width: 100%; height: 100%;
+      transition: transform .5s ease;
+      transform-style: preserve-3d;
+    }
+    .flipped .card-inner { transform: rotateY(180deg); }
+
+    .face {
+      position: absolute; inset: 0; border-radius: var(--radius);
+      display: grid; place-items: center; padding: 20px;
+      backface-visibility: hidden; -webkit-backface-visibility: hidden;
+      box-shadow: 0 8px 18px rgba(0,0,0,.15);
+      color: white;
+      text-align: center;
+    }
+    .front, .back {
+      font-size: clamp(2rem, 5vw + 1rem, 3rem); /* bigger font */
+    }
+    .back  { transform: rotateY(180deg); }
+    .front, .back {
+  line-height: 1.4;         /* give breathing space */
+  overflow: visible;        /* don’t clip text */
+  padding: 24px;            /* a little extra padding */
+}
+
+    .masc { background: linear-gradient(160deg, var(--masc), #3b82f6); }
+    .fem  { background: linear-gradient(160deg, var(--fem), #ef4444); }
+    .verb { background: linear-gradient(160deg, var(--verb), #10b981); }
+    .plural { background: linear-gradient(160deg, var(--plural), #424b5d); }
+
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 480px;
+      margin-top: 6px;
+    }
+    .nav-btn {
+      padding: 12px 18px;
+      font-size: 1rem;
+      font-weight: 600;
+      border: 1px solid black;
+      border-radius: 10px;
+      color: black;
+      background: white;
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+    .nav-btn:hover {
+      background: black;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="progress" id="progress">1 / 3</div>
+      <h1>كلمات المستوى الثاني</h1>
+    </header>
+
+    <div class="mode">
+      <button id="alpha" class="active">عربي</button>
+      <button id="aleph">قبطي</button>
+    </div>
+
+    <div class="stage">
+      <div class="card" id="card" aria-live="polite">
+        <div class="card-inner" id="cardInner">
+          <section class="face front masc" id="front">
+            <div id="term">بيت</div>
+          </section>
+          <section class="face back masc" id="back">
+            <div id="translation">ⲟⲩⲏⲓ</div>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <button id="prev" class="nav-btn">◀ السابق</button>
+      <button id="next" class="nav-btn">التالي ▶</button>
+    </div>
+
+  </div>
+
+  <script>
+    // Word list
+    const CARDS = [
+      { term: 'يعبر/يمضي', gender: 'v', trans: 'Cini' },
+      { term: 'يأتي', gender: 'v', trans: ';i' },
+      { term: 'يكره', gender: 'v', trans: 'moc]' },
+      { term: 'يصلي', gender: 'v', trans: ';sl/l' },
+      { term: 'يتكلم', gender: 'v', trans: 'caji' },
+      { term: 'أم', gender: 'f', trans: 'mau' },
+      { term: 'يأكل', gender: 'v', trans: 'ouwm' },
+      { term: 'يسمع', gender: 'v', trans: 'cwtem' },
+      { term: 'يعطي', gender: 'v', trans: ']' },
+      { term: 'عالَم', gender: 'm', trans: 'kocmoc' },
+      { term: 'يشرب', gender: 'v', trans: 'cw' },
+      { term: 'أب', gender: 'm', trans: 'iwt' },
+      { term: 'آباء', gender: 'p', trans: 'io]' },
+      { term: 'يصرخ', gender: 'v', trans: 'ws ebol' },
+      { term: 'رب', gender: 'm', trans: '[oic' },
+      { term: 'المسيح', gender: 'm', trans: 'Pi,rictoc' },
+      { term: 'يسأل', gender: 'v', trans: ']ho' },
+      { term: 'رجل/إنسان', gender: 'm', trans: 'rwmi' },
+      { term: 'يطلب', gender: 'v', trans: 'twbh' },
+      { term: 'يسوع', gender: 'm', trans: 'I/couc' },
+      { term: 'ابن', gender: 'm', trans: 's/ri' },
+      { term: 'مساء/ليل', gender: 'm', trans: ';ejwrh' },
+      { term: 'ابنة', gender: 'f', trans: 'seri' },
+      { term: 'امرأة', gender: 'f', trans: ';chimi' },
+      { term: 'نساء', gender: 'p', trans: 'hiomi' },
+      { term: 'إله', gender: 'm', trans: 'nou]' },
+      { term: 'ب / في', gender: 'p', trans: 'qen' },
+      { term: 'يوم', gender: 'm', trans: ';ehoou' },
+      { term: 'أرض', gender: 'm', trans: 'kahi' },
+      { term: 'سماء', gender: 'f', trans: 've' },
+      { term: 'سماوات', gender: 'p', trans: 'v/oui' },
+      { term: 'خلق', gender: 'v', trans: 'yamio' },
+      { term: 'خبز', gender: 'm', trans: 'wik' },
+      { term: 'يسبح/يبارك', gender: 'v', trans: ';cmou' },
+      { term: 'ملاك', gender: 'm', trans: 'aggeloc' },
+      { term: 'يرى', gender: 'v', trans: 'nau' },
+      { term: 'صوت', gender: 'f', trans: ';cm/' },
+      { term: 'يضرب', gender: 'v', trans: 'sari' },
+      { term: 'بار', gender: 'm', trans: ';ym/i' },
+      { term: 'يحيا', gender: 'v', trans: 'wnq' },
+      { term: 'يعرف', gender: 'v', trans: 'cwoun' },
+      { term: 'أخ', gender: 'm', trans: 'con' },
+      { term: 'إخوة', gender: 'p', trans: ';cn/ou' },
+      { term: 'جلس', gender: 'v', trans: 'hemci' },
+      { term: 'حكيمة', gender: 'f', trans: 'cab/' },
+      { term: 'حكيم', gender: 'm', trans: 'cabe' },
+      { term: 'ملك', gender: 'm', trans: 'ouro' },
+      { term: 'ملوك', gender: 'p', trans: 'ourwou' },
+      { term: 'نور', gender: 'm', trans: 'ouwini' },
+      { term: 'صنارة', gender: 'f', trans: 'wimi' },
+      { term: 'شعب', gender: 'm', trans: 'laoc' },
+      { term: 'ولد', gender: 'm', trans: 'alou' },
+      { term: 'أولاد', gender: 'p', trans: 'alwou;i' },
+      { term: 'بطن', gender: 'f', trans: 'neji' },
+      { term: 'يشهد', gender: 'v', trans: 'ermeyre' },
+      { term: 'إنجيل', gender: 'm', trans: 'euaggelion' },
+      { term: 'عذراء', gender: 'f', trans: 'paryenoc' },
+      { term: 'أتى', gender: 'v', trans: ';i' },
+      { term: 'حقيقة', gender: 'f', trans: 'meym/i' },
+      { term: 'قلم', gender: 'm', trans: 'kas' },
+      { term: 'اسم', gender: 'm', trans: 'ran' },
+      { term: 'يد', gender: 'f', trans: 'jij' },
+      { term: 'مكان', gender: 'm', trans: 'ma' },
+      { term: 'هناك', gender: 'p', trans: ';mmau' },
+      { term: 'أعجوبة/معجزة', gender: 'f', trans: ';sv/ri' },
+    ];
+
+    let idx = 0;
+    function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+let order = shuffle([...CARDS.keys()]);
+
+    let showArabicFirst = true;
+
+    const elCard = document.getElementById('card');
+    const elInner = document.getElementById('cardInner');
+    const elFront = document.getElementById('front');
+    const elBack = document.getElementById('back');
+    const elTerm = document.getElementById('term');
+    const elTrans = document.getElementById('translation');
+    const elProgress = document.getElementById('progress');
+    const btnPrev = document.getElementById('prev');
+    const btnNext = document.getElementById('next');
+    const btnAlpha = document.getElementById('alpha');
+    const btnAleph = document.getElementById('aleph');
+
+    function updateProgress() {
+      elProgress.textContent = `${idx + 1} / ${order.length}`;
+    }
+
+    function setGenderBg(c) {
+      elFront.className = 'face front';
+      elBack.className = 'face back';
+      if (c.gender === 'm') {
+        elFront.classList.add('masc'); elBack.classList.add('masc');
+      } else if (c.gender === 'f') {
+        elFront.classList.add('fem'); elBack.classList.add('fem');
+      } else if (c.gender === 'v') {
+        elFront.classList.add('verb'); elBack.classList.add('verb');
+      } else if (c.gender === 'p') {
+        elFront.classList.add('plural'); elBack.classList.add('plural');
+      }
+    }
+
+    function showCard(i) {
+  const c = CARDS[order[i]];
+  
+  if (showArabicFirst) {
+    elTerm.textContent = c.term;
+    elTrans.textContent = c.trans;
+    elTerm.style.fontFamily = 'system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans Arabic", Arial, sans-serif';
+    elTrans.style.fontFamily = '"New Athanasius", serif';
+  } else {
+    elTerm.textContent = c.trans;
+    elTrans.textContent = c.term;
+    elTerm.style.fontFamily = '"New Athanasius", serif';
+    elTrans.style.fontFamily = 'system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans Arabic", Arial, sans-serif';
+  }
+
+  setGenderBg(c);
+
+  // --- Reset flip instantly (no animation) ---
+  elInner.style.transition = "none";      // disable animation
+  elCard.classList.remove("flipped");     // force reset
+  void elCard.offsetWidth;                // force reflow (apply immediately)
+  elInner.style.transition = "";          // restore animation
+
+  updateProgress();
+}
+
+
+    function flip() {
+      elCard.classList.toggle('flipped');
+    }
+
+    function next() {
+      idx = (idx + 1) % order.length;
+      showCard(idx);
+    }
+    function prev() {
+      idx = (idx - 1 + order.length) % order.length;
+      showCard(idx);
+    }
+
+    elCard.addEventListener('click', flip);
+    btnNext.addEventListener('click', next);
+    btnPrev.addEventListener('click', prev);
+
+    btnAlpha.addEventListener('click', () => {
+      showArabicFirst = true;
+      btnAlpha.classList.add('active');
+      btnAleph.classList.remove('active');
+      showCard(idx);
+    });
+    btnAleph.addEventListener('click', () => {
+      showArabicFirst = false;
+      btnAleph.classList.add('active');
+      btnAlpha.classList.remove('active');
+      showCard(idx);
+    });
+
+    // Init
+    showCard(idx);
+  </script>
+</body>
+</html>
