@@ -1,0 +1,32 @@
+{
+  "id": "mawhoobeen-dialogue",
+  "title": "عبارات قصيرة للمحادثة اليومية",
+  "source": "موهوبين — مرحلة ثالثة ورابعة",
+  "needsReview": true,
+  "scenes": [
+    {
+      "turns": [
+        { "speaker": "مينا", "coptic": "Nane toou;i", "arabic": "صباح الخير" },
+        { "speaker": "بطرس", "coptic": "Nane toou;i", "arabic": "صباح الخير" },
+        { "speaker": "مينا", "coptic": "Nim pe pekran&", "arabic": "ما اسمك؟" },
+        { "speaker": "بطرس", "coptic": "Paran pe Petroc", "arabic": "اسمي بطرس" }
+      ]
+    },
+    {
+      "turns": [
+        { "speaker": "مرقس", "coptic": "Nane rouhi", "arabic": "مساء الخير" },
+        { "speaker": "ماريا", "coptic": "Nane rouhi", "arabic": "مساء الخير" },
+        { "speaker": "مرقس", "coptic": "Nim pe peran&", "arabic": "ما اسمك؟" },
+        { "speaker": "ماريا", "coptic": "Paran pe Maria", "arabic": "اسمي ماريا" }
+      ]
+    },
+    {
+      "turns": [
+        { "speaker": null, "coptic": "Nane toou;i Apanoub", "arabic": "صباح الخير يا أبانوب" },
+        { "speaker": null, "coptic": "Nane toou;i Carra", "arabic": "صباح الخير يا سارة" },
+        { "speaker": null, "coptic": "Nim te yai&", "arabic": "من هذه؟" },
+        { "speaker": null, "coptic": "Yai te Maria", "arabic": "هذه ماريا" }
+      ]
+    }
+  ]
+}

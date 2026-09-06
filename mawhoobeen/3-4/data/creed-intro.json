@@ -1,0 +1,32 @@
+{
+  "id": "mawhoobeen-creed-intro",
+  "title": "نص للحفظ شفوي فقط: مقدمة قانون الإيمان (مع حفظ الترجمة لكل جملة)",
+  "source": "موهوبين — مرحلة ثالثة ورابعة — مع حفظ الترجمة لكل جملة",
+  "needsReview": true,
+  "lines": [
+    { "coptic": "Ten[ici ;mmo ;ymau ;mpiouwini ;nta;vm/i: ten]wou ne w y/eyouab ouoh ;mmacnou]",
+      "arabic": "نعظمك يا أم النور الحقيقي، ونمجدك أيتها العذراء القديسة، والدة الإله" },
+    { "coptic": "je aremici nan ;m;pcwt/r ;mpikocmoc t/rf",
+      "arabic": "لأنك ولدتِ لنا مخلص العالم كله" },
+    { "coptic": "afi ouoh afcw] ;nnen'u,/",
+      "arabic": "أتى وخلص نفوسنا" },
+    { "coptic": "Ouwou nak penn/b penouro Pi,rictoc",
+      "arabic": "المجد لك يا سيدنا وملكنا المسيح" },
+    { "coptic": ";psousou ;nniapoctoloc",
+      "arabic": "فخر الرسل" },
+    { "coptic": "pi;,lom ;nte nimarturoc",
+      "arabic": "إكليل الشهداء" },
+    { "coptic": ";pyel/l ;nnidikeoc",
+      "arabic": "تهليل الصديقين" },
+    { "coptic": ";ptajro ;nniekkl/cia",
+      "arabic": "ثبات الكنائس" },
+    { "coptic": ";p,w ebol ;nte ninobi",
+      "arabic": "غفران الخطايا" },
+    { "coptic": "tenhiwis ;n];triac eyouab: ecqen oumeynou] ;nouwt",
+      "arabic": "نبشر بالثالوث القدوس، لاهوت واحد" },
+    { "coptic": "tenouwst ;mmoc: ten];wou nac",
+      "arabic": "نسجد له، ونمجده" },
+    { "coptic": "Kurie ele/con: Kurie ele/con: Kurie eulog/con. Am/n",
+      "arabic": "يا رب ارحم، يا رب ارحم، يا رب بارك. آمين" }
+  ]
+}
