@@ -136,6 +136,7 @@
       const res = await fetch('data/dialogue.json', { cache: 'no-store' });
       const dialogue = await res.json();
       let turnNumber = 0;
+      const audioExt = { 6: 'opus', 8: 'opus' };
       container.innerHTML = `
         <p class="intro">${escapeHtml(dialogue.title)}</p>
         ${dialogue.scenes.map((scene, i) => `
@@ -144,11 +145,12 @@
             ${scene.turns.map(t => {
               turnNumber++;
               const n = String(turnNumber).padStart(2, '0');
+              const ext = audioExt[turnNumber] || 'm4a';
               return `
               <div class="turn">
                 <div class="turn-head">
                   <div class="turn-speaker">${t.speaker ? escapeHtml(t.speaker) + ':' : ''}</div>
-                  <button class="speak-btn-sm" data-audio="audio/dialogue/${n}.m4a" title="نطق العبارة">${speakerIcon}</button>
+                  <button class="speak-btn-sm" data-audio="audio/dialogue/${n}.${ext}" title="نطق العبارة">${speakerIcon}</button>
                 </div>
                 <div class="line-row">
                   <div class="line-coptic">${escapeHtml(t.coptic)}</div>
